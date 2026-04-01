@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Pezzo {
     private int xPosition;
     private int yPosition;
@@ -44,11 +47,24 @@ public class Pezzo {
     }
 
     public void rotate() {
-        orientamento = (orientamento + 1) % 4;
+        orientamento = (orientamento + 1) % tipo.getRotazioni().length;
     }
 
     public int[][] getFormaCorrente() {
         return rotazioni[orientamento];
+    }
+
+    public List<Posizione> getCelleOccupate() {
+        List<Posizione> celleOccupate = new ArrayList<>();
+        int[][] forma = getFormaCorrente();
+        for (int i = 0; i < forma.length; i++) {
+            for (int j = 0; j < forma[i].length; j++) {
+                if (forma[i][j] == 1) {
+                    celleOccupate.add(new Posizione(xPosition + j, yPosition + i));
+                }
+            }
+        }
+        return celleOccupate;
     }
 
 }
